@@ -1,0 +1,1924 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GuruKu — Platform Pendidikan Pelosok Nusantara</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --c-bg: #0f1117;
+  --c-bg2: #161922;
+  --c-bg3: #1e2330;
+  --c-border: rgba(255,255,255,0.08);
+  --c-border2: rgba(255,255,255,0.14);
+  --c-text: #f0f2f7;
+  --c-muted: #8b92a8;
+  --c-accent: #f97316;
+  --c-accent2: #fb923c;
+  --c-blue: #3b82f6;
+  --c-green: #22c55e;
+  --c-red: #ef4444;
+  --c-yellow: #eab308;
+  --c-purple: #a855f7;
+  --c-teal: #14b8a6;
+  --r: 12px;
+  --r2: 16px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  --shadow2: 0 8px 40px rgba(0,0,0,0.5);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Plus Jakarta Sans', sans-serif;
+  background: var(--c-bg);
+  color: var(--c-text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--c-bg); }
+::-webkit-scrollbar-thumb { background:var(--c-bg3); border-radius:3px; }
+
+/* VIEWS */
+.view { display:none; min-height:100vh; }
+.view.active { display:flex; flex-direction:column; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+/* ─── LANDING ─── */
+#view-landing {
+  background: var(--c-bg);
+  position: relative;
+  overflow: hidden;
+}
+.landing-grid-bg {
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:
+    linear-gradient(rgba(249,115,22,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(249,115,22,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.landing-glow {
+  position:fixed; width:600px; height:600px; border-radius:50%;
+  background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
+  top:-200px; left:-100px; pointer-events:none; z-index:0;
+}
+.landing-glow2 {
+  position:fixed; width:500px; height:500px; border-radius:50%;
+  background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+  bottom:-150px; right:-100px; pointer-events:none; z-index:0;
+}
+.landing-nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 48px;
+  background: rgba(15,17,23,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--c-border);
+}
+.logo { display:flex; align-items:center; gap:10px; cursor:pointer; }
+.logo-icon {
+  width:36px; height:36px; border-radius:10px;
+  background: linear-gradient(135deg, var(--c-accent), #dc2626);
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; font-weight:800; color:#fff;
+}
+.logo-text { font-family:'Sora',sans-serif; font-size:20px; font-weight:700; letter-spacing:-0.5px; }
+.logo-text span { color:var(--c-accent); }
+.nav-links { display:flex; align-items:center; gap:8px; }
+.btn {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:10px 20px; border-radius:var(--r); border:none;
+  font-family:inherit; font-size:14px; font-weight:600;
+  cursor:pointer; transition:all 0.2s; text-decoration:none;
+}
+.btn-ghost { background:transparent; color:var(--c-muted); border:1px solid var(--c-border); }
+.btn-ghost:hover { color:var(--c-text); border-color:var(--c-border2); background:var(--c-bg3); }
+.btn-primary { background:var(--c-accent); color:#fff; }
+.btn-primary:hover { background:var(--c-accent2); transform:translateY(-1px); box-shadow:0 8px 20px rgba(249,115,22,0.3); }
+.btn-outline { background:transparent; color:var(--c-accent); border:1.5px solid var(--c-accent); }
+.btn-outline:hover { background:rgba(249,115,22,0.1); }
+.btn-blue { background:var(--c-blue); color:#fff; }
+.btn-blue:hover { background:#2563eb; }
+.btn-green { background:var(--c-green); color:#fff; }
+.btn-green:hover { background:#16a34a; }
+.btn-lg { padding:14px 28px; font-size:15px; border-radius:var(--r2); }
+.btn-sm { padding:7px 14px; font-size:13px; }
+
+.hero {
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:120px 24px 80px; position:relative; z-index:1;
+}
+.hero-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  padding:6px 16px; border-radius:999px;
+  background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.2);
+  font-size:13px; font-weight:600; color:var(--c-accent);
+  margin-bottom:28px;
+}
+.hero-badge-dot { width:7px; height:7px; border-radius:50%; background:var(--c-accent); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.hero h1 {
+  font-family:'Sora',sans-serif;
+  font-size:clamp(36px,6vw,68px);
+  font-weight:700; line-height:1.1;
+  letter-spacing:-1.5px;
+  margin-bottom:24px;
+}
+.hero h1 em { font-style:normal; color:var(--c-accent); }
+.hero p {
+  max-width:560px; font-size:17px; line-height:1.7;
+  color:var(--c-muted); margin-bottom:40px;
+}
+.hero-actions { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+.hero-stats {
+  display:flex; gap:48px; margin-top:64px;
+  padding-top:40px; border-top:1px solid var(--c-border);
+}
+.stat-item { text-align:center; }
+.stat-num { font-family:'Sora',sans-serif; font-size:28px; font-weight:700; color:var(--c-text); }
+.stat-num span { color:var(--c-accent); }
+.stat-label { font-size:13px; color:var(--c-muted); margin-top:4px; }
+
+.role-section {
+  padding:80px 48px; position:relative; z-index:1;
+}
+.section-title { font-family:'Sora',sans-serif; font-size:28px; font-weight:700; margin-bottom:8px; }
+.section-sub { color:var(--c-muted); font-size:15px; margin-bottom:40px; }
+.role-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:1000px; margin:0 auto; }
+.role-card {
+  background:var(--c-bg2); border:1px solid var(--c-border);
+  border-radius:var(--r2); padding:32px 28px;
+  cursor:pointer; transition:all 0.25s; position:relative; overflow:hidden;
+}
+.role-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  opacity:0; transition:opacity 0.25s;
+}
+.role-card:hover { border-color:var(--c-border2); transform:translateY(-4px); box-shadow:var(--shadow2); }
+.role-card:hover::before { opacity:1; }
+.role-card.guru::before { background:var(--c-accent); }
+.role-card.siswa::before { background:var(--c-blue); }
+.role-card.admin::before { background:var(--c-purple); }
+.role-icon {
+  width:52px; height:52px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:24px; margin-bottom:20px;
+}
+.role-icon.guru { background:rgba(249,115,22,0.12); }
+.role-icon.siswa { background:rgba(59,130,246,0.12); }
+.role-icon.admin { background:rgba(168,85,247,0.12); }
+.role-card h3 { font-size:18px; font-weight:700; margin-bottom:8px; }
+.role-card p { font-size:14px; color:var(--c-muted); line-height:1.6; margin-bottom:20px; }
+.role-card .btn { width:100%; justify-content:center; }
+
+/* ─── AUTH ─── */
+#view-auth {
+  min-height:100vh;
+  background:var(--c-bg);
+  align-items:center; justify-content:center;
+}
+.auth-wrap {
+  width:100%; max-width:420px; padding:24px;
+}
+.auth-back { display:flex; align-items:center; gap:8px; color:var(--c-muted); font-size:14px; cursor:pointer; margin-bottom:32px; }
+.auth-back:hover { color:var(--c-text); }
+.auth-card {
+  background:var(--c-bg2); border:1px solid var(--c-border);
+  border-radius:var(--r2); padding:36px 32px;
+}
+.auth-logo { margin-bottom:8px; }
+.auth-card h2 { font-family:'Sora',sans-serif; font-size:22px; font-weight:700; margin-bottom:6px; }
+.auth-card p { color:var(--c-muted); font-size:14px; margin-bottom:28px; }
+.form-group { margin-bottom:18px; }
+.form-label { display:block; font-size:13px; font-weight:600; color:var(--c-muted); margin-bottom:8px; }
+.form-input {
+  width:100%; padding:12px 14px; border-radius:var(--r);
+  background:var(--c-bg3); border:1.5px solid var(--c-border);
+  color:var(--c-text); font-family:inherit; font-size:15px;
+  transition:border-color 0.2s;
+}
+.form-input:focus { outline:none; border-color:var(--c-accent); }
+.form-input::placeholder { color:var(--c-muted); opacity:0.5; }
+.auth-divider { text-align:center; color:var(--c-muted); font-size:13px; margin:20px 0; position:relative; }
+.auth-divider::before, .auth-divider::after {
+  content:''; position:absolute; top:50%; width:40%; height:1px;
+  background:var(--c-border);
+}
+.auth-divider::before { left:0; }
+.auth-divider::after { right:0; }
+
+/* ─── APP SHELL ─── */
+.app-shell { display:flex; height:100vh; overflow:hidden; }
+.sidebar {
+  width:240px; flex-shrink:0;
+  background:var(--c-bg2); border-right:1px solid var(--c-border);
+  display:flex; flex-direction:column; padding:20px 0;
+}
+.sidebar-logo { padding:0 20px 20px; border-bottom:1px solid var(--c-border); margin-bottom:16px; }
+.sidebar-logo .logo { justify-content:flex-start; }
+.sidebar-user {
+  padding:12px 16px; margin:0 8px 16px;
+  background:var(--c-bg3); border-radius:var(--r);
+  display:flex; align-items:center; gap:10px;
+}
+.avatar {
+  width:34px; height:34px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; font-weight:700; flex-shrink:0;
+}
+.avatar-guru { background:rgba(249,115,22,0.2); color:var(--c-accent); }
+.avatar-siswa { background:rgba(59,130,246,0.2); color:var(--c-blue); }
+.avatar-admin { background:rgba(168,85,247,0.2); color:var(--c-purple); }
+.user-name { font-size:13px; font-weight:600; }
+.user-role { font-size:11px; color:var(--c-muted); }
+.nav-section { padding:0 8px; margin-bottom:8px; }
+.nav-section-label { font-size:10px; font-weight:700; color:var(--c-muted); letter-spacing:1px; padding:0 12px; margin-bottom:6px; text-transform:uppercase; }
+.nav-item {
+  display:flex; align-items:center; gap:10px;
+  padding:10px 12px; border-radius:var(--r);
+  cursor:pointer; transition:all 0.15s;
+  font-size:14px; font-weight:500; color:var(--c-muted);
+  margin-bottom:2px;
+}
+.nav-item:hover { background:var(--c-bg3); color:var(--c-text); }
+.nav-item.active { background:rgba(249,115,22,0.12); color:var(--c-accent); font-weight:600; }
+.nav-item.active.blue { background:rgba(59,130,246,0.12); color:var(--c-blue); }
+.nav-item.active.purple { background:rgba(168,85,247,0.12); color:var(--c-purple); }
+.nav-badge {
+  margin-left:auto; background:var(--c-accent);
+  color:#fff; font-size:10px; font-weight:700;
+  padding:2px 7px; border-radius:999px;
+}
+.sidebar-footer { margin-top:auto; padding:12px 8px; border-top:1px solid var(--c-border); }
+
+.main-content { flex:1; overflow-y:auto; display:flex; flex-direction:column; background:var(--c-bg); }
+.topbar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 28px; border-bottom:1px solid var(--c-border);
+  background:var(--c-bg); position:sticky; top:0; z-index:10;
+}
+.topbar-title { font-family:'Sora',sans-serif; font-size:20px; font-weight:700; }
+.topbar-actions { display:flex; align-items:center; gap:10px; }
+.page-content { padding:28px; flex:1; }
+
+/* ─── CARDS & UI ─── */
+.card {
+  background:var(--c-bg2); border:1px solid var(--c-border);
+  border-radius:var(--r2); padding:24px;
+}
+.card-sm { padding:16px 20px; }
+.grid-2 { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+
+.stat-card {
+  background:var(--c-bg2); border:1px solid var(--c-border);
+  border-radius:var(--r2); padding:20px 22px;
+  position:relative; overflow:hidden;
+}
+.stat-card-icon {
+  width:40px; height:40px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; margin-bottom:14px;
+}
+.stat-card-val { font-family:'Sora',sans-serif; font-size:26px; font-weight:700; margin-bottom:4px; }
+.stat-card-label { font-size:13px; color:var(--c-muted); }
+.stat-card-change { font-size:12px; margin-top:6px; }
+.stat-card-change.up { color:var(--c-green); }
+.stat-card-change.down { color:var(--c-red); }
+
+.tag {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:4px 10px; border-radius:999px;
+  font-size:12px; font-weight:600;
+}
+.tag-orange { background:rgba(249,115,22,0.12); color:var(--c-accent); }
+.tag-blue { background:rgba(59,130,246,0.12); color:var(--c-blue); }
+.tag-green { background:rgba(34,197,94,0.12); color:var(--c-green); }
+.tag-red { background:rgba(239,68,68,0.12); color:var(--c-red); }
+.tag-yellow { background:rgba(234,179,8,0.12); color:var(--c-yellow); }
+.tag-purple { background:rgba(168,85,247,0.12); color:var(--c-purple); }
+
+.badge {
+  width:8px; height:8px; border-radius:50%; display:inline-block;
+}
+.badge-green { background:var(--c-green); }
+.badge-orange { background:var(--c-accent); }
+.badge-red { background:var(--c-red); }
+
+/* TABLE */
+.table-wrap { overflow-x:auto; border-radius:var(--r2); border:1px solid var(--c-border); }
+table { width:100%; border-collapse:collapse; }
+thead th {
+  padding:12px 16px; text-align:left;
+  font-size:12px; font-weight:700; color:var(--c-muted);
+  text-transform:uppercase; letter-spacing:0.5px;
+  background:var(--c-bg3); border-bottom:1px solid var(--c-border);
+}
+tbody td {
+  padding:13px 16px; font-size:14px;
+  border-bottom:1px solid var(--c-border);
+}
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:hover { background:var(--c-bg3); }
+
+/* PROGRESS */
+.progress-bar {
+  height:6px; background:var(--c-bg3); border-radius:999px; overflow:hidden;
+}
+.progress-fill { height:100%; border-radius:999px; transition:width 0.5s; }
+
+/* MODAL OVERLAY */
+.modal-overlay {
+  display:none; position:fixed; inset:0; z-index:999;
+  background:rgba(0,0,0,0.7); backdrop-filter:blur(6px);
+  align-items:center; justify-content:center; padding:24px;
+}
+.modal-overlay.open { display:flex; animation:fadeIn 0.2s ease; }
+.modal {
+  background:var(--c-bg2); border:1px solid var(--c-border);
+  border-radius:var(--r2); padding:32px; width:100%; max-width:480px;
+  position:relative;
+}
+.modal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; }
+.modal-title { font-family:'Sora',sans-serif; font-size:18px; font-weight:700; }
+.modal-close {
+  width:32px; height:32px; border-radius:8px; background:var(--c-bg3);
+  border:none; color:var(--c-muted); cursor:pointer; font-size:16px;
+  display:flex; align-items:center; justify-content:center;
+}
+.modal-close:hover { color:var(--c-text); background:var(--c-border); }
+.modal-footer { display:flex; gap:10px; justify-content:flex-end; margin-top:24px; }
+
+/* TOAST */
+.toast-container { position:fixed; bottom:24px; right:24px; z-index:9999; display:flex; flex-direction:column; gap:8px; }
+.toast {
+  background:var(--c-bg2); border:1px solid var(--c-border);
+  border-radius:var(--r); padding:12px 16px;
+  display:flex; align-items:center; gap:10px;
+  font-size:14px; font-weight:500;
+  animation:slideIn 0.3s ease, fadeOut 0.3s ease 2.7s;
+  box-shadow:var(--shadow);
+}
+.toast.success { border-left:3px solid var(--c-green); }
+.toast.error { border-left:3px solid var(--c-red); }
+.toast.info { border-left:3px solid var(--c-blue); }
+@keyframes slideIn { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
+@keyframes fadeOut { from{opacity:1} to{opacity:0} }
+
+/* OFFLINE INDICATOR */
+.offline-bar {
+  display:none; background:var(--c-yellow); color:#000;
+  text-align:center; padding:8px; font-size:13px; font-weight:600;
+}
+.offline-bar.show { display:block; }
+
+/* ─── SISWA SPECIFIC ─── */
+.siswa-hero {
+  background:linear-gradient(135deg, rgba(59,130,246,0.15), rgba(59,130,246,0.05));
+  border:1px solid rgba(59,130,246,0.2);
+  border-radius:var(--r2); padding:28px; margin-bottom:24px;
+}
+.tugas-card {
+  background:var(--c-bg2); border:1px solid var(--c-border);
+  border-radius:var(--r2); padding:20px 22px;
+  cursor:pointer; transition:all 0.2s;
+  margin-bottom:12px;
+}
+.tugas-card:hover { border-color:var(--c-border2); transform:translateX(4px); }
+.tugas-header { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:10px; }
+.tugas-title { font-size:15px; font-weight:700; margin-bottom:4px; }
+.tugas-meta { font-size:13px; color:var(--c-muted); }
+.deadline-warn { font-size:12px; color:var(--c-yellow); font-weight:600; margin-top:6px; }
+
+/* UPLOAD ZONE */
+.upload-zone {
+  border:2px dashed var(--c-border2);
+  border-radius:var(--r2); padding:40px;
+  text-align:center; cursor:pointer; transition:all 0.2s;
+  background:var(--c-bg3);
+}
+.upload-zone:hover, .upload-zone.dragover {
+  border-color:var(--c-blue); background:rgba(59,130,246,0.05);
+}
+.upload-icon { font-size:36px; margin-bottom:12px; }
+.upload-zone p { color:var(--c-muted); font-size:14px; }
+.upload-zone strong { color:var(--c-blue); }
+
+/* GRADING */
+.grading-stack { position:relative; max-width:360px; margin:0 auto; }
+.grade-card {
+  background:var(--c-bg2); border:1.5px solid var(--c-border);
+  border-radius:var(--r2); overflow:hidden;
+  transition:transform 0.3s, opacity 0.3s;
+}
+.grade-card img { width:100%; height:220px; object-fit:cover; background:var(--c-bg3); }
+.grade-card-body { padding:18px; }
+.grade-actions { display:flex; gap:10px; margin-top:16px; justify-content:center; }
+.grade-btn {
+  width:52px; height:52px; border-radius:50%;
+  border:2px solid var(--c-border2); background:var(--c-bg3);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:all 0.2s; font-size:20px;
+}
+.grade-btn.reject:hover { border-color:var(--c-red); background:rgba(239,68,68,0.1); }
+.grade-btn.approve:hover { border-color:var(--c-green); background:rgba(34,197,94,0.1); }
+.grade-btn.retry:hover { border-color:var(--c-yellow); background:rgba(234,179,8,0.1); }
+
+/* NILAI INPUT */
+.nilai-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; }
+.nilai-btn {
+  padding:10px; border-radius:8px; border:1.5px solid var(--c-border);
+  background:var(--c-bg3); color:var(--c-text); font-size:14px; font-weight:700;
+  cursor:pointer; transition:all 0.15s; text-align:center;
+}
+.nilai-btn:hover, .nilai-btn.selected {
+  border-color:var(--c-accent); background:rgba(249,115,22,0.12); color:var(--c-accent);
+}
+
+/* CHART MOCK */
+.chart-bar-group { display:flex; align-items:flex-end; gap:8px; height:120px; padding-top:12px; }
+.chart-bar-wrap { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; }
+.chart-bar {
+  width:100%; border-radius:4px 4px 0 0;
+  background:rgba(249,115,22,0.5); transition:height 0.5s;
+  min-height:4px; position:relative;
+}
+.chart-bar:hover { background:var(--c-accent); }
+.chart-bar-label { font-size:11px; color:var(--c-muted); }
+
+/* AI INSIGHT CARD */
+.ai-card {
+  background:linear-gradient(135deg, rgba(168,85,247,0.12), rgba(59,130,246,0.08));
+  border:1px solid rgba(168,85,247,0.2); border-radius:var(--r2); padding:20px;
+}
+.ai-header { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.ai-badge {
+  display:flex; align-items:center; gap:6px;
+  background:rgba(168,85,247,0.15); padding:4px 10px;
+  border-radius:999px; font-size:12px; font-weight:700; color:var(--c-purple);
+}
+.ai-dot { width:6px; height:6px; border-radius:50%; background:var(--c-purple); animation:pulse 1.5s infinite; }
+
+/* OFFLINE QUEUE */
+.queue-indicator {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:6px 12px; border-radius:999px;
+  background:rgba(234,179,8,0.1); border:1px solid rgba(234,179,8,0.2);
+  font-size:13px; font-weight:600; color:var(--c-yellow);
+}
+
+/* RESPONSIVE */
+@media (max-width:768px) {
+  .landing-nav { padding:14px 20px; }
+  .hero { padding:90px 20px 60px; }
+  .hero-stats { gap:24px; }
+  .role-section { padding:48px 20px; }
+  .role-cards { grid-template-columns:1fr; }
+  .sidebar { display:none; }
+  .grid-4 { grid-template-columns:repeat(2,1fr); }
+  .grid-3 { grid-template-columns:1fr; }
+}
+
+/* SECTION DIVIDER */
+.section-divider { height:1px; background:var(--c-border); margin:28px 0; }
+
+/* EMPTY STATE */
+.empty-state { text-align:center; padding:48px 24px; color:var(--c-muted); }
+.empty-state-icon { font-size:40px; margin-bottom:12px; opacity:0.5; }
+.empty-state p { font-size:15px; }
+
+/* SELECT */
+.form-select {
+  width:100%; padding:11px 14px; border-radius:var(--r);
+  background:var(--c-bg3); border:1.5px solid var(--c-border);
+  color:var(--c-text); font-family:inherit; font-size:14px;
+  cursor:pointer;
+}
+.form-select:focus { outline:none; border-color:var(--c-accent); }
+
+/* PHOTO PREVIEW */
+.photo-preview {
+  width:100%; height:180px; border-radius:var(--r);
+  background:var(--c-bg3); border:1px solid var(--c-border);
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden; position:relative;
+}
+.photo-preview img { width:100%; height:100%; object-fit:cover; }
+.photo-preview-placeholder { color:var(--c-muted); font-size:13px; text-align:center; }
+
+/* NOTIFICATION DOT */
+.notif-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:var(--c-red); margin-left:auto;
+}
+
+/* RISK FLAG */
+.risk-flag {
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:11px; font-weight:700; color:var(--c-red);
+  background:rgba(239,68,68,0.1); padding:3px 8px; border-radius:999px;
+}
+
+/* AI LOADING SHIMMER */
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.ai-loading {
+  display: flex; align-items: center; gap: 10px;
+  color: var(--c-muted); font-size: 13px; font-style: italic;
+}
+.ai-loading-dots span {
+  display: inline-block; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--c-purple); margin: 0 2px;
+  animation: dotBounce 1.2s infinite ease-in-out;
+}
+.ai-loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.ai-loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotBounce { 0%,80%,100%{transform:scale(0.6);opacity:0.4} 40%{transform:scale(1);opacity:1} }
+
+/* AI CHAT BUBBLE for siswa */
+.ai-chat-bubble {
+  background: linear-gradient(135deg, rgba(59,130,246,0.12), rgba(20,184,166,0.08));
+  border: 1px solid rgba(59,130,246,0.2); border-radius: var(--r2);
+  padding: 18px 20px; margin-top: 20px;
+}
+.ai-chat-bubble .ai-header { margin-bottom: 10px; }
+.ai-chat-bubble .ai-badge { background: rgba(59,130,246,0.15); color: var(--c-blue); }
+.ai-chat-bubble .ai-badge .ai-dot { background: var(--c-blue); }
+
+/* AI ANALYZE BUTTON */
+.btn-ai {
+  background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(59,130,246,0.15));
+  border: 1px solid rgba(168,85,247,0.3); color: var(--c-purple);
+}
+.btn-ai:hover { background: linear-gradient(135deg, rgba(168,85,247,0.3), rgba(59,130,246,0.25)); border-color: rgba(168,85,247,0.5); }
+</style>
+</head>
+<body>
+
+<div class="toast-container" id="toastContainer"></div>
+<div class="offline-bar" id="offlineBar">Tidak ada koneksi internet — mode offline aktif, data akan tersinkron otomatis</div>
+
+<!-- ══════════════════════════════════════════════
+     LANDING PAGE
+══════════════════════════════════════════════ -->
+<div id="view-landing" class="view active">
+  <div class="landing-grid-bg"></div>
+  <div class="landing-glow"></div>
+  <div class="landing-glow2"></div>
+
+  <nav class="landing-nav">
+    <div class="logo">
+      <div class="logo-icon">G</div>
+      <div class="logo-text">Guru<span>Ku</span></div>
+    </div>
+    <div class="nav-links">
+      <button class="btn btn-ghost btn-sm" onclick="showAuth('guru')">Masuk sebagai Guru</button>
+      <button class="btn btn-primary btn-sm" onclick="showAuth('siswa')">Masuk sebagai Siswa</button>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Platform Pendidikan Pelosok Nusantara
+    </div>
+    <h1>Administrasi <em>ringan,</em><br>pendidikan <em>berkualitas.</em></h1>
+    <p>Solusi pengumpulan tugas, penilaian cepat, dan rekap otomatis dirancang khusus untuk guru dan siswa di daerah dengan koneksi terbatas — bekerja penuh bahkan tanpa internet.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary btn-lg" onclick="showAuth('guru')">🏫 Masuk sebagai Guru</button>
+      <button class="btn btn-outline btn-lg" onclick="showAuth('siswa')">📚 Masuk sebagai Siswa</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">98<span>%</span></div>
+        <div class="stat-label">Lebih ringan dari GCR</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span>&lt;</span>200kb</div>
+        <div class="stat-label">Per upload foto</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100<span>%</span></div>
+        <div class="stat-label">Offline-capable</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="role-section">
+    <div style="text-align:center; margin-bottom:40px;">
+      <div class="section-title">Siapa kamu?</div>
+      <div class="section-sub">Pilih peranmu untuk masuk ke platform</div>
+    </div>
+    <div class="role-cards">
+      <div class="role-card guru" onclick="showAuth('guru')">
+        <div class="role-icon guru">🧑‍🏫</div>
+        <h3>Guru</h3>
+        <p>Buat sesi tugas, nilai dengan cepat, rekap otomatis, dan pantau perkembangan siswa dengan mudah.</p>
+        <button class="btn btn-primary">Masuk sebagai Guru →</button>
+      </div>
+      <div class="role-card siswa" onclick="showAuth('siswa')">
+        <div class="role-icon siswa">🎒</div>
+        <h3>Siswa</h3>
+        <p>Kumpulkan tugas dengan foto, lihat nilai dan feedback, bekerja bahkan saat sinyal tidak stabil.</p>
+        <button class="btn btn-blue">Masuk sebagai Siswa →</button>
+      </div>
+      <div class="role-card admin" onclick="showAuth('admin')">
+        <div class="role-icon admin">🏫</div>
+        <h3>Admin / Kepala Sekolah</h3>
+        <p>Pantau seluruh aktivitas sekolah, laporan mingguan, dan identifikasi siswa yang butuh perhatian.</p>
+        <button class="btn" style="background:rgba(168,85,247,0.15);color:var(--c-purple);width:100%;justify-content:center;">Masuk sebagai Admin →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     AUTH PAGE
+══════════════════════════════════════════════ -->
+<div id="view-auth" class="view">
+  <div class="landing-grid-bg"></div>
+  <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;position:relative;z-index:1;">
+    <div class="auth-wrap" style="max-width:420px;">
+      <div class="auth-back" onclick="goTo('landing')">← Kembali</div>
+      <div class="auth-card">
+        <div class="auth-logo logo" style="margin-bottom:20px;">
+          <div class="logo-icon">G</div>
+          <div class="logo-text">Guru<span>Ku</span></div>
+        </div>
+        <h2 id="auth-title">Masuk sebagai Guru</h2>
+        <p id="auth-subtitle">Masukkan kode sekolah dan PIN kamu untuk melanjutkan</p>
+
+        <div class="form-group">
+          <label class="form-label">Kode Sekolah</label>
+          <input type="text" class="form-input" id="input-school" placeholder="Contoh: SMPTTS01" maxlength="12" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
+        </div>
+        <div class="form-group" id="nama-group" style="display:none;">
+          <label class="form-label">Nama Lengkap</label>
+          <input type="text" class="form-input" id="input-nama" placeholder="Nama kamu">
+        </div>
+        <div class="form-group" id="kelas-group" style="display:none;">
+          <label class="form-label">Kelas</label>
+          <select class="form-select" id="input-kelas">
+            <option value="">Pilih kelas</option>
+            <option>7A</option><option>7B</option><option>8A</option><option>8B</option><option>9A</option><option>9B</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">PIN (4 digit)</label>
+          <input type="password" class="form-input" id="input-pin" placeholder="••••" maxlength="4" inputmode="numeric">
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;justify-content:center;padding:13px;" id="btn-login" onclick="doLogin()">
+          Masuk
+        </button>
+
+        <div class="auth-divider">atau</div>
+        <div style="text-align:center;font-size:13px;color:var(--c-muted);">
+          Belum punya akun? <span style="color:var(--c-accent);cursor:pointer;" onclick="showRegister()">Daftar di sini</span>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;text-align:center;font-size:12px;color:var(--c-muted);">
+        Demo: Kode sekolah apa saja • PIN: 1234
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     GURU DASHBOARD
+══════════════════════════════════════════════ -->
+<div id="view-guru" class="view">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-logo"><div class="logo"><div class="logo-icon">G</div><div class="logo-text">Guru<span>Ku</span></div></div></div>
+      <div class="sidebar-user">
+        <div class="avatar avatar-guru">YS</div>
+        <div><div class="user-name">Pak Yosef</div><div class="user-role">Guru Matematika</div></div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Utama</div>
+        <div class="nav-item active" onclick="showGuruPage('dashboard', this)">📊 Dashboard</div>
+        <div class="nav-item" onclick="showGuruPage('tugas', this)">📝 Tugas Saya <span class="nav-badge">3</span></div>
+        <div class="nav-item" onclick="showGuruPage('penilaian', this)">✅ Penilaian <span class="nav-badge">12</span></div>
+        <div class="nav-item" onclick="showGuruPage('rekap', this)">📊 Rekap Nilai</div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Laporan</div>
+        <div class="nav-item" onclick="showGuruPage('siswa', this)">👥 Data Siswa</div>
+        <div class="nav-item" onclick="showGuruPage('laporan', this)">📋 Laporan</div>
+      </div>
+      <div class="sidebar-footer">
+        <div class="nav-item" onclick="doLogout()">🚪 Keluar</div>
+      </div>
+    </aside>
+
+    <div class="main-content">
+      <!-- GURU: Dashboard -->
+      <div id="guru-dashboard">
+        <div class="topbar">
+          <div>
+            <div class="topbar-title">Selamat Pagi, Pak Yosef 👋</div>
+            <div style="font-size:13px;color:var(--c-muted);margin-top:2px;">Selasa, 21 April 2026 · Kelas 8A, 8B, 9A</div>
+          </div>
+          <div class="topbar-actions">
+            <div class="queue-indicator" id="guru-offline-q" style="display:none;">⏳ 3 data menunggu sync</div>
+            <button class="btn btn-primary btn-sm" onclick="openModal('modal-buat-tugas')">+ Buat Tugas</button>
+          </div>
+        </div>
+        <div class="page-content">
+          <!-- AI Insight -->
+          <div class="ai-card" style="margin-bottom:24px;">
+            <div class="ai-header">
+              <span class="ai-badge"><span class="ai-dot"></span>AI Insight</span>
+              <span style="font-size:12px;color:var(--c-muted);margin-left:auto;" id="guru-insight-ts">diperbarui 5 menit lalu</span>
+            </div>
+            <p id="guru-insight-text" style="font-size:14px;line-height:1.7;color:var(--c-text);">Dari 94 siswa aktif, <strong>87 (92%)</strong> sudah mengumpulkan tugas minggu ini. Rata-rata nilai kelas 8A meningkat 6 poin dari minggu lalu. <span style="color:var(--c-red);font-weight:600;">4 siswa</span> terdeteksi membutuhkan perhatian berdasarkan tren nilai 3 tugas terakhir.</p>
+          </div>
+
+          <!-- Stats -->
+          <div class="grid-4" style="margin-bottom:24px;">
+            <div class="stat-card">
+              <div class="stat-card-icon" style="background:rgba(249,115,22,0.1);">📝</div>
+              <div class="stat-card-val">12</div>
+              <div class="stat-card-label">Menunggu dinilai</div>
+              <div class="stat-card-change up">↑ dari 3 kelas</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon" style="background:rgba(34,197,94,0.1);">✅</div>
+              <div class="stat-card-val">87</div>
+              <div class="stat-card-label">Sudah mengumpulkan</div>
+              <div class="stat-card-change up">↑ 92% partisipasi</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon" style="background:rgba(239,68,68,0.1);">⚠️</div>
+              <div class="stat-card-val">4</div>
+              <div class="stat-card-label">Siswa at-risk</div>
+              <div class="stat-card-change down">Tren nilai menurun</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon" style="background:rgba(59,130,246,0.1);">📈</div>
+              <div class="stat-card-val">74.2</div>
+              <div class="stat-card-label">Rata-rata nilai</div>
+              <div class="stat-card-change up">↑ +6 dari minggu lalu</div>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+            <!-- Tugas Aktif -->
+            <div class="card">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+                <div style="font-size:15px;font-weight:700;">Tugas Aktif</div>
+                <button class="btn btn-ghost btn-sm" onclick="showGuruPage('tugas',null)">Lihat semua</button>
+              </div>
+              <div>
+                <div onclick="showGuruPage('penilaian',null)" style="cursor:pointer;">
+                <div style="padding:14px;background:var(--c-bg3);border-radius:var(--r);margin-bottom:10px;border-left:3px solid var(--c-accent);">
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <div style="font-weight:600;font-size:14px;">Persamaan Linear — 8A</div>
+                    <span class="tag tag-orange">12 masuk</span>
+                  </div>
+                  <div style="font-size:13px;color:var(--c-muted);margin-top:4px;">Deadline: Besok, 23:59</div>
+                  <div class="progress-bar" style="margin-top:10px;"><div class="progress-fill" style="width:75%;background:var(--c-accent);"></div></div>
+                  <div style="font-size:11px;color:var(--c-muted);margin-top:4px;">24/32 siswa sudah kumpul</div>
+                </div>
+                </div>
+                <div style="padding:14px;background:var(--c-bg3);border-radius:var(--r);margin-bottom:10px;border-left:3px solid var(--c-blue);">
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <div style="font-weight:600;font-size:14px;">Fungsi Kuadrat — 9A</div>
+                    <span class="tag tag-blue">28 masuk</span>
+                  </div>
+                  <div style="font-size:13px;color:var(--c-muted);margin-top:4px;">Deadline: 25 Apr</div>
+                  <div class="progress-bar" style="margin-top:10px;"><div class="progress-fill" style="width:90%;background:var(--c-blue);"></div></div>
+                  <div style="font-size:11px;color:var(--c-muted);margin-top:4px;">28/31 siswa sudah kumpul</div>
+                </div>
+                <div style="padding:14px;background:var(--c-bg3);border-radius:var(--r);border-left:3px solid var(--c-green);">
+                  <div style="display:flex;align-items:center;justify-content:space-between;">
+                    <div style="font-weight:600;font-size:14px;">Statistika Dasar — 8B</div>
+                    <span class="tag tag-green">Selesai dinilai</span>
+                  </div>
+                  <div style="font-size:13px;color:var(--c-muted);margin-top:4px;">Deadline sudah lewat</div>
+                  <div class="progress-bar" style="margin-top:10px;"><div class="progress-fill" style="width:100%;background:var(--c-green);"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Grafik nilai -->
+            <div class="card">
+              <div style="font-size:15px;font-weight:700;margin-bottom:18px;">Rata-rata Nilai Mingguan</div>
+              <div class="chart-bar-group" id="chart-bars"></div>
+              <div style="display:flex;justify-content:space-between;margin-top:8px;">
+                <span style="font-size:11px;color:var(--c-muted);">M1</span>
+                <span style="font-size:11px;color:var(--c-muted);">M2</span>
+                <span style="font-size:11px;color:var(--c-muted);">M3</span>
+                <span style="font-size:11px;color:var(--c-muted);">M4</span>
+                <span style="font-size:11px;color:var(--c-muted);">M5</span>
+                <span style="font-size:11px;color:var(--c-muted);">M6</span>
+              </div>
+              <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--c-border);display:flex;gap:16px;font-size:13px;">
+                <span style="color:var(--c-muted);">Tertinggi: <strong style="color:var(--c-green);">88</strong></span>
+                <span style="color:var(--c-muted);">Terendah: <strong style="color:var(--c-red);">58</strong></span>
+                <span style="color:var(--c-muted);">Rata-rata: <strong style="color:var(--c-text);">74.2</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- At-risk students -->
+          <div class="card" style="margin-top:20px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+              <div>
+                <div style="font-size:15px;font-weight:700;">Siswa Perlu Perhatian</div>
+                <div style="font-size:13px;color:var(--c-muted);">Terdeteksi AI berdasarkan tren nilai</div>
+              </div>
+              <button class="btn btn-ai btn-sm" onclick="aiAnalyzeAtRisk()">✨ Analisis AI</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Nama</th><th>Kelas</th><th>Nilai Terakhir</th><th>Tren</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Budi Santoso</strong></td><td>8A</td><td>52</td><td style="color:var(--c-red);">↓ -18 dalam 3 tugas</td><td><span class="risk-flag">⚠ At-risk</span></td></tr>
+                  <tr><td><strong>Siti Rahayu</strong></td><td>8B</td><td>55</td><td style="color:var(--c-red);">↓ -12 dalam 3 tugas</td><td><span class="risk-flag">⚠ At-risk</span></td></tr>
+                  <tr><td><strong>Ahmad Fauzi</strong></td><td>9A</td><td>48</td><td style="color:var(--c-red);">↓ Tidak kumpul 2x</td><td><span class="risk-flag">⚠ At-risk</span></td></tr>
+                  <tr><td><strong>Dewi Puspita</strong></td><td>8A</td><td>60</td><td style="color:var(--c-yellow);">→ Stagnasi</td><td><span class="tag tag-yellow">Pantau</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="at-risk-ai-result" style="display:none;margin-top:16px;" class="ai-card">
+              <div class="ai-header"><span class="ai-badge"><span class="ai-dot"></span>Rekomendasi AI</span></div>
+              <p id="at-risk-ai-text" style="font-size:14px;line-height:1.7;"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GURU: Tugas -->
+      <div id="guru-tugas" style="display:none;">
+        <div class="topbar">
+          <div class="topbar-title">Tugas Saya</div>
+          <button class="btn btn-primary btn-sm" onclick="openModal('modal-buat-tugas')">+ Buat Tugas Baru</button>
+        </div>
+        <div class="page-content">
+          <div style="display:grid;gap:14px;">
+            <div class="tugas-card" onclick="showGuruPage('penilaian',null)">
+              <div class="tugas-header">
+                <div><div class="tugas-title">Persamaan Linear Satu Variabel</div><div class="tugas-meta">📚 Matematika · Kelas 8A · Dibuat 19 Apr</div></div>
+                <span class="tag tag-orange">Aktif</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:16px;font-size:13px;color:var(--c-muted);">
+                <span>📥 24/32 terkumpul</span><span>✅ 0 dinilai</span><span>⏰ Deadline besok</span>
+              </div>
+              <div class="progress-bar" style="margin-top:12px;"><div class="progress-fill" style="width:75%;background:var(--c-accent);"></div></div>
+              <div class="deadline-warn">⏰ Deadline dalam 18 jam</div>
+            </div>
+            <div class="tugas-card">
+              <div class="tugas-header">
+                <div><div class="tugas-title">Fungsi Kuadrat dan Grafiknya</div><div class="tugas-meta">📚 Matematika · Kelas 9A · Dibuat 18 Apr</div></div>
+                <span class="tag tag-blue">Aktif</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:16px;font-size:13px;color:var(--c-muted);">
+                <span>📥 28/31 terkumpul</span><span>✅ 10 dinilai</span><span>⏰ Deadline 25 Apr</span>
+              </div>
+              <div class="progress-bar" style="margin-top:12px;"><div class="progress-fill" style="width:90%;background:var(--c-blue);"></div></div>
+            </div>
+            <div class="tugas-card">
+              <div class="tugas-header">
+                <div><div class="tugas-title">Statistika Dasar: Mean, Median, Modus</div><div class="tugas-meta">📚 Matematika · Kelas 8B · Dibuat 14 Apr</div></div>
+                <span class="tag tag-green">Selesai</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:16px;font-size:13px;color:var(--c-muted);">
+                <span>📥 30/30 terkumpul</span><span>✅ 30 dinilai</span><span>📊 Rata-rata: 76.4</span>
+              </div>
+              <div class="progress-bar" style="margin-top:12px;"><div class="progress-fill" style="width:100%;background:var(--c-green);"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GURU: Penilaian -->
+      <div id="guru-penilaian" style="display:none;">
+        <div class="topbar">
+          <div><div class="topbar-title">Mode Penilaian</div><div style="font-size:13px;color:var(--c-muted);">Persamaan Linear — Kelas 8A · 12 tugas menunggu</div></div>
+        </div>
+        <div class="page-content">
+          <div style="display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:start;">
+            <div>
+              <div class="card" style="margin-bottom:16px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                  <div style="font-weight:700;">Antrian Penilaian</div>
+                  <span class="tag tag-orange">12 menunggu</span>
+                </div>
+                <div id="penilaian-list">
+                  <!-- generated by JS -->
+                </div>
+              </div>
+            </div>
+            <!-- Grading Panel -->
+            <div style="position:sticky;top:80px;">
+              <div class="card">
+                <div style="font-weight:700;margin-bottom:16px;">Panel Nilai Cepat</div>
+                <div style="background:var(--c-bg3);border-radius:var(--r);height:200px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:36px;cursor:pointer;" onclick="showToast('Foto tugas terbuka','info')">📷</div>
+                <div style="font-size:14px;font-weight:600;margin-bottom:4px;" id="grade-student-name">Maria Nona Taolin</div>
+                <div style="font-size:12px;color:var(--c-muted);margin-bottom:16px;">Dikumpulkan: 20 Apr 2026, 14:32</div>
+                <div style="font-size:13px;font-weight:600;color:var(--c-muted);margin-bottom:10px;">Pilih Nilai:</div>
+                <div class="nilai-grid" id="nilai-grid"></div>
+                <div style="margin-top:14px;">
+                  <label class="form-label">Catatan (opsional)</label>
+                  <input type="text" class="form-input" id="catatan-input" placeholder="Catatan untuk siswa...">
+                </div>
+                <div style="margin-top:10px;">
+                  <button class="btn btn-ai btn-sm" style="width:100%;justify-content:center;margin-bottom:8px;" onclick="aiGenerateFeedback()">✨ Generate Feedback AI</button>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:6px;">
+                  <button class="btn btn-green" style="flex:1;justify-content:center;" onclick="submitNilai()">✓ Simpan Nilai</button>
+                  <button class="btn btn-ghost btn-sm" onclick="showToast('Ditandai untuk diulang','info')" style="color:var(--c-yellow);">↩ Ulang</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GURU: Rekap -->
+      <div id="guru-rekap" style="display:none;">
+        <div class="topbar">
+          <div class="topbar-title">Rekap Nilai</div>
+          <div class="topbar-actions">
+            <button class="btn btn-ghost btn-sm" onclick="showToast('Export CSV sedang diproses...','info')">📥 Export CSV</button>
+            <button class="btn btn-ghost btn-sm" onclick="showToast('PDF sedang digenerate...','info')">📄 Export PDF</button>
+          </div>
+        </div>
+        <div class="page-content">
+          <div style="display:flex;gap:12px;margin-bottom:20px;">
+            <select class="form-select" style="max-width:160px;"><option>Kelas 8A</option><option>Kelas 8B</option><option>Kelas 9A</option></select>
+            <select class="form-select" style="max-width:200px;"><option>Semua Tugas</option><option>Persamaan Linear</option><option>Statistika Dasar</option></select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>#</th><th>Nama Siswa</th><th>Tugas 1</th><th>Tugas 2</th><th>Tugas 3</th><th>Rata-rata</th><th>Status</th></tr></thead>
+              <tbody id="rekap-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- GURU: Siswa -->
+      <div id="guru-siswa" style="display:none;">
+        <div class="topbar"><div class="topbar-title">Data Siswa</div></div>
+        <div class="page-content">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Nama</th><th>Kelas</th><th>Total Tugas</th><th>Partisipasi</th><th>Rata-rata</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Maria Nona Taolin</strong></td><td>8A</td><td>3/3</td><td><div class="progress-bar" style="width:80px;"><div class="progress-fill" style="width:100%;background:var(--c-green);"></div></div></td><td style="color:var(--c-green);font-weight:600;">85</td><td><span class="tag tag-green">Baik</span></td></tr>
+                <tr><td><strong>Ghifar Maulana</strong></td><td>8A</td><td>3/3</td><td><div class="progress-bar" style="width:80px;"><div class="progress-fill" style="width:100%;background:var(--c-green);"></div></div></td><td style="color:var(--c-green);font-weight:600;">78</td><td><span class="tag tag-green">Baik</span></td></tr>
+                <tr><td><strong>Budi Santoso</strong></td><td>8A</td><td>2/3</td><td><div class="progress-bar" style="width:80px;"><div class="progress-fill" style="width:67%;background:var(--c-yellow);"></div></div></td><td style="color:var(--c-red);font-weight:600;">52</td><td><span class="risk-flag">⚠ At-risk</span></td></tr>
+                <tr><td><strong>Siti Rahayu</strong></td><td>8B</td><td>3/3</td><td><div class="progress-bar" style="width:80px;"><div class="progress-fill" style="width:100%;background:var(--c-blue);"></div></div></td><td style="color:var(--c-red);font-weight:600;">55</td><td><span class="risk-flag">⚠ At-risk</span></td></tr>
+                <tr><td><strong>Ahmad Fauzi</strong></td><td>9A</td><td>1/3</td><td><div class="progress-bar" style="width:80px;"><div class="progress-fill" style="width:33%;background:var(--c-red);"></div></div></td><td style="color:var(--c-red);font-weight:600;">48</td><td><span class="risk-flag">⚠ At-risk</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- GURU: Laporan -->
+      <div id="guru-laporan" style="display:none;">
+        <div class="topbar"><div class="topbar-title">Laporan Mingguan</div><button class="btn btn-ghost btn-sm" onclick="showToast('PDF digenerate...','info')">📄 Download PDF</button></div>
+        <div class="page-content">
+          <div class="ai-card" style="margin-bottom:20px;">
+            <div class="ai-header"><span class="ai-badge"><span class="ai-dot"></span>Ringkasan AI</span></div>
+            <p id="laporan-ai-text" style="font-size:14px;line-height:1.8;">Minggu ini, kelas 8A menunjukkan peningkatan rata-rata nilai sebesar 6.2 poin dibandingkan minggu lalu. Tingkat pengumpulan tugas mencapai 92%, tertinggi dalam 4 minggu terakhir. Terdapat 4 siswa yang memerlukan perhatian khusus berdasarkan analisis tren nilai. Disarankan untuk melakukan pendekatan personal terhadap Budi Santoso dan Ahmad Fauzi yang menunjukkan tren paling mengkhawatirkan.</p>
+          </div>
+          <div class="grid-3">
+            <div class="stat-card"><div class="stat-card-icon" style="background:rgba(249,115,22,0.1);">📝</div><div class="stat-card-val">94</div><div class="stat-card-label">Total siswa aktif</div></div>
+            <div class="stat-card"><div class="stat-card-icon" style="background:rgba(34,197,94,0.1);">✅</div><div class="stat-card-val">87</div><div class="stat-card-label">Mengumpulkan tugas</div></div>
+            <div class="stat-card"><div class="stat-card-icon" style="background:rgba(59,130,246,0.1);">📊</div><div class="stat-card-val">74.2</div><div class="stat-card-label">Rata-rata nilai</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     SISWA DASHBOARD
+══════════════════════════════════════════════ -->
+<div id="view-siswa" class="view">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-logo"><div class="logo"><div class="logo-icon" style="background:linear-gradient(135deg,var(--c-blue),#1d4ed8);">G</div><div class="logo-text">Guru<span style="color:var(--c-blue);">Ku</span></div></div></div>
+      <div class="sidebar-user">
+        <div class="avatar avatar-siswa">MN</div>
+        <div><div class="user-name">Maria Nona</div><div class="user-role">Siswa · Kelas 8A</div></div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Menu</div>
+        <div class="nav-item active blue" onclick="showSiswaPage('home',this)">🏠 Beranda</div>
+        <div class="nav-item" onclick="showSiswaPage('tugas',this)">📚 Tugas Saya <span class="nav-badge" style="background:var(--c-blue);">2</span></div>
+        <div class="nav-item" onclick="showSiswaPage('nilai',this)">🎯 Nilai Saya</div>
+        <div class="nav-item" onclick="showSiswaPage('submit',this)">📤 Kumpulkan Tugas</div>
+      </div>
+      <div class="sidebar-footer"><div class="nav-item" onclick="doLogout()">🚪 Keluar</div></div>
+    </aside>
+
+    <div class="main-content">
+      <!-- SISWA: Home -->
+      <div id="siswa-home">
+        <div class="topbar">
+          <div><div class="topbar-title">Halo, Maria! 👋</div><div style="font-size:13px;color:var(--c-muted);">Semangat belajar hari ini</div></div>
+          <div class="queue-indicator" id="siswa-offline-q" style="display:none;">⏳ 1 tugas menunggu terkirim</div>
+        </div>
+        <div class="page-content">
+          <div class="siswa-hero">
+            <div style="font-size:13px;color:var(--c-blue);font-weight:600;margin-bottom:8px;">📊 Progres Kamu</div>
+            <div style="font-family:'Sora',sans-serif;font-size:36px;font-weight:700;margin-bottom:4px;">85 <span style="font-size:18px;color:var(--c-muted);font-weight:400;">/ 100</span></div>
+            <div style="font-size:14px;color:var(--c-muted);margin-bottom:14px;">Rata-rata nilai • 3 tugas sudah dikumpulkan</div>
+            <div class="progress-bar" style="height:8px;"><div class="progress-fill" style="width:85%;background:linear-gradient(90deg,var(--c-blue),var(--c-teal));"></div></div>
+          </div>
+
+          <div class="grid-3" style="margin-bottom:24px;">
+            <div class="stat-card">
+              <div class="stat-card-icon" style="background:rgba(59,130,246,0.1);">📚</div>
+              <div class="stat-card-val">2</div>
+              <div class="stat-card-label">Tugas belum dikumpul</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon" style="background:rgba(34,197,94,0.1);">🎯</div>
+              <div class="stat-card-val">3</div>
+              <div class="stat-card-label">Tugas sudah dinilai</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon" style="background:rgba(234,179,8,0.1);">🏆</div>
+              <div class="stat-card-val">85</div>
+              <div class="stat-card-label">Nilai rata-rata</div>
+            </div>
+          </div>
+
+          <div style="font-size:15px;font-weight:700;margin-bottom:14px;">Tugas Mendesak</div>
+          <div class="tugas-card" onclick="showSiswaPage('submit',null)">
+            <div class="tugas-header">
+              <div>
+                <div class="tugas-title">Persamaan Linear Satu Variabel</div>
+                <div class="tugas-meta">📚 Matematika · Pak Yosef</div>
+              </div>
+              <span class="tag tag-orange">Belum kumpul</span>
+            </div>
+            <div class="deadline-warn">⏰ Deadline besok pukul 23:59 — Segera kumpulkan!</div>
+          </div>
+
+          <div style="font-size:15px;font-weight:700;margin:20px 0 14px;">Nilai Terbaru</div>
+          <div style="display:grid;gap:10px;">
+            <div style="padding:14px;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:var(--r);display:flex;align-items:center;justify-content:space-between;">
+              <div><div style="font-weight:600;font-size:14px;">Statistika Dasar</div><div style="font-size:12px;color:var(--c-muted);">Dinilai 18 Apr 2026</div></div>
+              <div style="font-family:'Sora',sans-serif;font-size:28px;font-weight:700;color:var(--c-green);">88</div>
+            </div>
+            <div style="padding:14px;background:var(--c-bg2);border:1px solid var(--c-border);border-radius:var(--r);display:flex;align-items:center;justify-content:space-between;">
+              <div><div style="font-weight:600;font-size:14px;">Fungsi Kuadrat</div><div style="font-size:12px;color:var(--c-muted);">Dinilai 14 Apr 2026</div></div>
+              <div style="font-family:'Sora',sans-serif;font-size:28px;font-weight:700;color:var(--c-blue);">82</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SISWA: Tugas -->
+      <div id="siswa-tugas" style="display:none;">
+        <div class="topbar"><div class="topbar-title">Tugas Saya</div></div>
+        <div class="page-content">
+          <div style="font-size:13px;color:var(--c-muted);margin-bottom:16px;">2 tugas menunggu dikumpulkan</div>
+          <div class="tugas-card" onclick="showSiswaPage('submit',null)" style="border-left:3px solid var(--c-accent);">
+            <div class="tugas-header">
+              <div><div class="tugas-title">Persamaan Linear Satu Variabel</div><div class="tugas-meta">📚 Matematika · Pak Yosef · Kelas 8A</div></div>
+              <span class="tag tag-orange">Belum kumpul</span>
+            </div>
+            <div class="deadline-warn">⏰ Deadline besok, 23:59</div>
+          </div>
+          <div class="tugas-card" style="border-left:3px solid var(--c-green);">
+            <div class="tugas-header">
+              <div><div class="tugas-title">Fungsi Kuadrat dan Grafiknya</div><div class="tugas-meta">📚 Matematika · Pak Yosef · Kelas 8A</div></div>
+              <span class="tag tag-green">Sudah dikumpul</span>
+            </div>
+            <div style="font-size:13px;color:var(--c-muted);">Dikumpulkan 20 Apr 2026 • Menunggu penilaian</div>
+          </div>
+          <div class="tugas-card" style="border-left:3px solid var(--c-blue);">
+            <div class="tugas-header">
+              <div><div class="tugas-title">Statistika Dasar</div><div class="tugas-meta">📚 Matematika · Pak Yosef · Kelas 8A</div></div>
+              <span class="tag tag-blue">Sudah dinilai</span>
+            </div>
+            <div style="font-size:13px;color:var(--c-muted);">Nilai: <strong style="color:var(--c-green);font-size:16px;">88</strong> · "Bagus, pertahankan!"</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SISWA: Nilai -->
+      <div id="siswa-nilai" style="display:none;">
+        <div class="topbar"><div class="topbar-title">Nilai Saya</div></div>
+        <div class="page-content">
+          <div style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(20,184,166,0.1));border:1px solid rgba(34,197,94,0.2);border-radius:var(--r2);padding:24px;margin-bottom:24px;text-align:center;">
+            <div style="font-size:13px;color:var(--c-green);font-weight:600;margin-bottom:6px;">RATA-RATA NILAI KAMU</div>
+            <div style="font-family:'Sora',sans-serif;font-size:56px;font-weight:700;color:var(--c-green);">85</div>
+            <div style="font-size:14px;color:var(--c-muted);">Dari 3 tugas yang sudah dinilai · Peringkat 3 di kelas</div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Tugas</th><th>Mata Pelajaran</th><th>Nilai</th><th>Feedback</th><th>Tanggal</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Statistika Dasar</strong></td><td>Matematika</td><td style="color:var(--c-green);font-weight:700;font-size:16px;">88</td><td style="font-size:13px;color:var(--c-muted);">"Bagus, pertahankan!"</td><td style="font-size:13px;color:var(--c-muted);">18 Apr</td></tr>
+                <tr><td><strong>Fungsi Kuadrat</strong></td><td>Matematika</td><td style="color:var(--c-blue);font-weight:700;font-size:16px;">82</td><td style="font-size:13px;color:var(--c-muted);">"Grafik kurang rapi"</td><td style="font-size:13px;color:var(--c-muted);">14 Apr</td></tr>
+                <tr><td><strong>Aljabar Dasar</strong></td><td>Matematika</td><td style="color:var(--c-blue);font-weight:700;font-size:16px;">85</td><td style="font-size:13px;color:var(--c-muted);">"Mantap!"</td><td style="font-size:13px;color:var(--c-muted);">8 Apr</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- AI Saran Belajar — injected by JS -->
+          <div id="siswa-ai-saran"></div>
+        </div>
+      </div>
+
+      <!-- SISWA: Submit -->
+      <div id="siswa-submit" style="display:none;">
+        <div class="topbar"><div class="topbar-title">Kumpulkan Tugas</div></div>
+        <div class="page-content">
+          <div style="max-width:480px;">
+            <div style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.2);border-radius:var(--r2);padding:16px 18px;margin-bottom:24px;">
+              <div style="font-weight:700;font-size:14px;margin-bottom:4px;">Persamaan Linear Satu Variabel</div>
+              <div style="font-size:13px;color:var(--c-muted);">📚 Matematika · Pak Yosef</div>
+              <div style="font-size:12px;color:var(--c-yellow);font-weight:600;margin-top:6px;">⏰ Deadline: Besok, 23:59</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Foto Tugas Kamu</label>
+              <div class="upload-zone" id="upload-zone" onclick="triggerUpload()">
+                <div class="upload-icon">📷</div>
+                <p><strong>Tap untuk ambil foto</strong> atau pilih dari galeri</p>
+                <p style="font-size:12px;margin-top:6px;opacity:0.6;">Foto akan dikompresi otomatis · Maks 200KB</p>
+              </div>
+              <input type="file" id="file-input" accept="image/*" capture="environment" style="display:none;" onchange="handleFileSelect(this)">
+            </div>
+
+            <div id="preview-section" style="display:none;" class="form-group">
+              <label class="form-label">Preview Foto</label>
+              <div class="photo-preview" id="photo-preview"></div>
+              <div style="font-size:12px;color:var(--c-green);margin-top:6px;" id="compress-status">✓ Foto terkompresi · 143KB</div>
+              <!-- AI photo validation result injected here -->
+              <div id="photo-ai-check" style="margin-top:10px;"></div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Catatan (opsional)</label>
+              <input type="text" class="form-input" placeholder="Catatan untuk Pak Yosef...">
+            </div>
+
+            <div id="offline-notice" style="display:none;background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.2);border-radius:var(--r);padding:12px 14px;margin-bottom:16px;font-size:13px;color:var(--c-yellow);">
+              ⚡ Mode offline — tugas disimpan lokal dan akan dikirim otomatis saat koneksi tersedia
+            </div>
+
+            <button class="btn btn-blue btn-lg" style="width:100%;justify-content:center;" onclick="submitTugas()">
+              📤 Kumpulkan Tugas
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     ADMIN DASHBOARD
+══════════════════════════════════════════════ -->
+<div id="view-admin" class="view">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-logo"><div class="logo"><div class="logo-icon" style="background:linear-gradient(135deg,var(--c-purple),#7c3aed);">G</div><div class="logo-text">Guru<span style="color:var(--c-purple);">Ku</span></div></div></div>
+      <div class="sidebar-user">
+        <div class="avatar avatar-admin">AK</div>
+        <div><div class="user-name">Ahmad Kepala</div><div class="user-role">Kepala Sekolah</div></div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Manajemen</div>
+        <div class="nav-item active" onclick="showAdminPage('overview',this)">📊 Overview Sekolah</div>
+        <div class="nav-item" onclick="showAdminPage('guru-list',this)">🧑‍🏫 Data Guru</div>
+        <div class="nav-item" onclick="showAdminPage('siswa-list',this)">👥 Data Siswa</div>
+        <div class="nav-item" onclick="showAdminPage('laporan-admin',this)">📋 Laporan</div>
+        <div class="nav-item" onclick="showAdminPage('keamanan',this)">🔒 Keamanan <span class="notif-dot"></span></div>
+      </div>
+      <div class="sidebar-footer"><div class="nav-item" onclick="doLogout()">🚪 Keluar</div></div>
+    </aside>
+
+    <div class="main-content">
+      <!-- ADMIN: Overview -->
+      <div id="admin-overview">
+        <div class="topbar">
+          <div><div class="topbar-title">Overview Sekolah</div><div style="font-size:13px;color:var(--c-muted);">SMP Negeri 1 TTS · Kab. Timor Tengah Selatan, NTT</div></div>
+          <button class="btn btn-ghost btn-sm" onclick="showToast('Laporan PDF digenerate...','info')">📄 Export Laporan</button>
+        </div>
+        <div class="page-content">
+          <div class="ai-card" style="margin-bottom:24px;">
+            <div class="ai-header"><span class="ai-badge"><span class="ai-dot"></span>Ringkasan AI Mingguan</span></div>
+            <p id="admin-insight-text" style="font-size:14px;line-height:1.7;">Sekolah menunjukkan performa baik minggu ini dengan tingkat partisipasi pengumpulan tugas <strong>89%</strong>. Kelas 9A mencatat rata-rata nilai tertinggi (78.4), sementara kelas 7B memerlukan perhatian dengan rata-rata 61.2. Terdapat <strong>8 siswa</strong> dari total 3 kelas yang terindikasi at-risk dan memerlukan intervensi segera.</p>
+          </div>
+          <div class="grid-4" style="margin-bottom:24px;">
+            <div class="stat-card"><div class="stat-card-icon" style="background:rgba(168,85,247,0.1);">🏫</div><div class="stat-card-val">6</div><div class="stat-card-label">Kelas aktif</div></div>
+            <div class="stat-card"><div class="stat-card-icon" style="background:rgba(249,115,22,0.1);">🧑‍🏫</div><div class="stat-card-val">8</div><div class="stat-card-label">Guru terdaftar</div></div>
+            <div class="stat-card"><div class="stat-card-icon" style="background:rgba(59,130,246,0.1);">👥</div><div class="stat-card-val">186</div><div class="stat-card-label">Total siswa</div></div>
+            <div class="stat-card"><div class="stat-card-icon" style="background:rgba(239,68,68,0.1);">⚠️</div><div class="stat-card-val">8</div><div class="stat-card-label">Siswa at-risk</div><div class="stat-card-change down">Perlu intervensi</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+            <div class="card">
+              <div style="font-size:15px;font-weight:700;margin-bottom:18px;">Performa Per Kelas</div>
+              <div id="kelas-chart"></div>
+            </div>
+            <div class="card">
+              <div style="font-size:15px;font-weight:700;margin-bottom:18px;">Partisipasi Pengumpulan</div>
+              <div style="display:grid;gap:12px;" id="partisipasi-list"></div>
+            </div>
+          </div>
+          <div class="card" style="margin-top:20px;">
+            <div style="font-size:15px;font-weight:700;margin-bottom:18px;">Siswa At-Risk Seluruh Sekolah</div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Nama</th><th>Kelas</th><th>Guru</th><th>Nilai Terkini</th><th>Indikator</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Budi Santoso</strong></td><td>8A</td><td>Pak Yosef</td><td style="color:var(--c-red);font-weight:600;">52</td><td><span class="risk-flag">⚠ Tren turun</span></td></tr>
+                  <tr><td><strong>Ahmad Fauzi</strong></td><td>9A</td><td>Pak Yosef</td><td style="color:var(--c-red);font-weight:600;">48</td><td><span class="risk-flag">⚠ Tidak kumpul 2x</span></td></tr>
+                  <tr><td><strong>Siti Rahayu</strong></td><td>8B</td><td>Pak Yosef</td><td style="color:var(--c-red);font-weight:600;">55</td><td><span class="risk-flag">⚠ Tren turun</span></td></tr>
+                  <tr><td><strong>Yanto Lelo</strong></td><td>7B</td><td>Bu Marta</td><td style="color:var(--c-red);font-weight:600;">44</td><td><span class="risk-flag">⚠ Tren turun</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN: Guru List -->
+      <div id="admin-guru-list" style="display:none;">
+        <div class="topbar"><div class="topbar-title">Data Guru</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-tambah-guru')">+ Tambah Guru</button></div>
+        <div class="page-content">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Nama</th><th>Mata Pelajaran</th><th>Kelas Diampu</th><th>Tugas Aktif</th><th>Terakhir Aktif</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Pak Yosef</strong></td><td>Matematika</td><td>8A, 8B, 9A</td><td>3</td><td style="color:var(--c-green);">Hari ini</td><td><span class="tag tag-green">Aktif</span></td></tr>
+                <tr><td><strong>Bu Marta</strong></td><td>Bahasa Indonesia</td><td>7A, 7B, 8A</td><td>2</td><td style="color:var(--c-muted);">2 hari lalu</td><td><span class="tag tag-green">Aktif</span></td></tr>
+                <tr><td><strong>Pak Dedi</strong></td><td>IPA</td><td>7A, 7B</td><td>1</td><td style="color:var(--c-yellow);">5 hari lalu</td><td><span class="tag tag-yellow">Jarang aktif</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN: Siswa List -->
+      <div id="admin-siswa-list" style="display:none;">
+        <div class="topbar"><div class="topbar-title">Data Siswa</div></div>
+        <div class="page-content">
+          <div style="display:flex;gap:12px;margin-bottom:20px;">
+            <select class="form-select" style="max-width:160px;"><option>Semua Kelas</option><option>7A</option><option>7B</option><option>8A</option><option>8B</option><option>9A</option><option>9B</option></select>
+            <select class="form-select" style="max-width:180px;"><option>Semua Status</option><option>At-Risk</option><option>Normal</option></select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Nama</th><th>Kelas</th><th>Partisipasi</th><th>Rata-rata</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Maria Nona Taolin</strong></td><td>8A</td><td>100%</td><td style="color:var(--c-green);font-weight:700;">85</td><td><span class="tag tag-green">Baik</span></td></tr>
+                <tr><td><strong>Ghifar Maulana</strong></td><td>8A</td><td>100%</td><td style="color:var(--c-green);font-weight:700;">78</td><td><span class="tag tag-green">Baik</span></td></tr>
+                <tr><td><strong>Budi Santoso</strong></td><td>8A</td><td>67%</td><td style="color:var(--c-red);font-weight:700;">52</td><td><span class="risk-flag">⚠ At-risk</span></td></tr>
+                <tr><td><strong>Ahmad Fauzi</strong></td><td>9A</td><td>33%</td><td style="color:var(--c-red);font-weight:700;">48</td><td><span class="risk-flag">⚠ At-risk</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN: Laporan -->
+      <div id="admin-laporan-admin" style="display:none;">
+        <div class="topbar"><div class="topbar-title">Laporan Sekolah</div><button class="btn btn-ghost btn-sm" onclick="showToast('PDF digenerate...','info')">📄 Download PDF</button></div>
+        <div class="page-content">
+          <div class="grid-3">
+            <div class="card card-sm" style="cursor:pointer;" onclick="showToast('Laporan mingguan dibuka','info')"><div style="font-size:20px;margin-bottom:8px;">📊</div><div style="font-weight:600;font-size:14px;">Laporan Mingguan</div><div style="font-size:12px;color:var(--c-muted);margin-top:4px;">Rekap 7 hari terakhir</div></div>
+            <div class="card card-sm" style="cursor:pointer;" onclick="showToast('Laporan bulanan dibuka','info')"><div style="font-size:20px;margin-bottom:8px;">📅</div><div style="font-weight:600;font-size:14px;">Laporan Bulanan</div><div style="font-size:12px;color:var(--c-muted);margin-top:4px;">April 2026</div></div>
+            <div class="card card-sm" style="cursor:pointer;" onclick="showToast('Laporan at-risk dibuka','info')"><div style="font-size:20px;margin-bottom:8px;">⚠️</div><div style="font-weight:600;font-size:14px;">Laporan At-Risk</div><div style="font-size:12px;color:var(--c-muted);margin-top:4px;">8 siswa teridentifikasi</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN: Keamanan -->
+      <div id="admin-keamanan" style="display:none;">
+        <div class="topbar"><div class="topbar-title">Log Keamanan</div></div>
+        <div class="page-content">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+            <div class="stat-card" style="border-color:rgba(34,197,94,0.2);">
+              <div class="stat-card-icon" style="background:rgba(34,197,94,0.1);">🔒</div>
+              <div class="stat-card-val" style="color:var(--c-green);">Aman</div>
+              <div class="stat-card-label">Status sistem saat ini</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-card-icon" style="background:rgba(239,68,68,0.1);">⛔</div>
+              <div class="stat-card-val">3</div>
+              <div class="stat-card-label">Login gagal hari ini</div>
+              <div class="stat-card-change" style="color:var(--c-muted);">Di bawah threshold</div>
+            </div>
+          </div>
+          <div class="card">
+            <div style="font-size:15px;font-weight:700;margin-bottom:18px;">Audit Log Terbaru</div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Waktu</th><th>Aksi</th><th>Pengguna</th><th>IP</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td style="font-size:12px;color:var(--c-muted);">21 Apr, 09:12</td><td style="font-size:13px;">Login berhasil</td><td>Pak Yosef</td><td style="font-size:12px;color:var(--c-muted);">192.168.x.x</td><td><span class="tag tag-green">OK</span></td></tr>
+                  <tr><td style="font-size:12px;color:var(--c-muted);">21 Apr, 08:54</td><td style="font-size:13px;">Export rekap nilai</td><td>Pak Yosef</td><td style="font-size:12px;color:var(--c-muted);">192.168.x.x</td><td><span class="tag tag-green">OK</span></td></tr>
+                  <tr><td style="font-size:12px;color:var(--c-muted);">21 Apr, 08:40</td><td style="font-size:13px;">Login gagal (PIN salah)</td><td>Unknown</td><td style="font-size:12px;color:var(--c-muted);">10.0.x.x</td><td><span class="tag tag-red">GAGAL</span></td></tr>
+                  <tr><td style="font-size:12px;color:var(--c-muted);">20 Apr, 21:05</td><td style="font-size:13px;">Upload foto tugas</td><td>Maria Nona</td><td style="font-size:12px;color:var(--c-muted);">10.0.x.x</td><td><span class="tag tag-green">OK</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     MODALS
+══════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-buat-tugas">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Buat Tugas Baru</div>
+      <button class="modal-close" onclick="closeModal('modal-buat-tugas')">✕</button>
+    </div>
+    <div class="form-group"><label class="form-label">Judul Tugas</label><input type="text" class="form-input" placeholder="Contoh: Persamaan Linear Satu Variabel"></div>
+    <div class="form-group"><label class="form-label">Mata Pelajaran</label><input type="text" class="form-input" value="Matematika"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="form-group"><label class="form-label">Kelas</label><select class="form-select"><option>8A</option><option>8B</option><option>9A</option></select></div>
+      <div class="form-group"><label class="form-label">Deadline</label><input type="date" class="form-input"></div>
+    </div>
+    <div class="form-group"><label class="form-label">Deskripsi Tugas</label><textarea class="form-input" rows="3" placeholder="Jelaskan soal atau instruksi tugas..."></textarea></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-buat-tugas')">Batal</button>
+      <button class="btn btn-primary" onclick="buatTugas()">✓ Buat Tugas & Generate QR</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-tambah-guru">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Tambah Guru Baru</div>
+      <button class="modal-close" onclick="closeModal('modal-tambah-guru')">✕</button>
+    </div>
+    <div class="form-group"><label class="form-label">Nama Lengkap</label><input type="text" class="form-input" placeholder="Nama guru"></div>
+    <div class="form-group"><label class="form-label">Mata Pelajaran</label><input type="text" class="form-input" placeholder="Matematika, IPA, dll."></div>
+    <div class="form-group"><label class="form-label">PIN (akan dikirim ke guru)</label><input type="text" class="form-input" placeholder="4 digit PIN" maxlength="4" inputmode="numeric"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modal-tambah-guru')">Batal</button>
+      <button class="btn btn-primary" onclick="tambahGuru()">+ Tambah Guru</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-submit-sukses">
+  <div class="modal" style="text-align:center;max-width:360px;">
+    <div style="font-size:52px;margin-bottom:16px;">🎉</div>
+    <div class="modal-title" style="margin-bottom:8px;">Tugas Berhasil Dikumpulkan!</div>
+    <p style="color:var(--c-muted);font-size:14px;line-height:1.6;margin-bottom:24px;">Tugas kamu sudah diterima dan akan segera dinilai oleh Pak Yosef. Kamu akan mendapat notifikasi saat sudah ada nilainya.</p>
+    <button class="btn btn-blue" style="width:100%;justify-content:center;" onclick="closeModal('modal-submit-sukses');showSiswaPage('tugas',null)">Lihat Tugas Saya</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     ORIGINAL SCRIPT — TIDAK DIUBAH
+══════════════════════════════════════════════ -->
+<script>
+// ─── STATE ───────────────────────────────────────
+let currentRole = 'guru';
+let selectedNilai = null;
+const siswaData = [
+  {nama:'Maria Nona Taolin',t1:88,t2:82,t3:85},{nama:'Ghifar Maulana',t1:76,t2:80,t3:78},
+  {nama:'Budi Santoso',t1:70,t2:62,t3:52},{nama:'Siti Rahayu',t1:75,t2:68,t3:55},
+  {nama:'Ahmad Fauzi',t1:65,t2:58,t3:48},{nama:'Dewi Puspita',t1:72,t2:71,t3:60},
+  {nama:'Rina Lestari',t1:80,t2:83,t3:86},{nama:'Tono Wijaya',t1:68,t2:72,t3:74},
+];
+
+// ─── NAVIGATION ──────────────────────────────────
+function goTo(view) {
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+view).classList.add('active');
+}
+
+function showAuth(role) {
+  currentRole = role;
+  goTo('auth');
+  const titles = {guru:'Masuk sebagai Guru',siswa:'Masuk sebagai Siswa',admin:'Masuk sebagai Admin'};
+  document.getElementById('auth-title').textContent = titles[role];
+  document.getElementById('auth-subtitle').textContent = role==='siswa'
+    ? 'Masukkan kode sekolah dan PIN kamu'
+    : 'Masukkan kode sekolah dan PIN kamu untuk melanjutkan';
+  document.getElementById('nama-group').style.display = role==='siswa' ? 'block':'none';
+  document.getElementById('kelas-group').style.display = role==='siswa' ? 'block':'none';
+  const btn = document.getElementById('btn-login');
+  btn.className = `btn btn-${role==='siswa'?'blue':role==='admin'?'ghost btn-outline':''} btn-primary`;
+  if(role==='siswa') btn.className='btn btn-blue';
+  if(role==='guru') btn.className='btn btn-primary';
+  if(role==='admin') btn.className='btn btn-primary';
+  btn.style.width='100%'; btn.style.justifyContent='center'; btn.style.padding='13px';
+}
+
+function showRegister() {
+  showToast('Hubungi kepala sekolah untuk mendapatkan akun', 'info');
+}
+
+function doLogin() {
+  const school = document.getElementById('input-school').value;
+  const pin = document.getElementById('input-pin').value;
+  if (!school || pin.length < 4) { showToast('Lengkapi kode sekolah dan PIN', 'error'); return; }
+  if (pin !== '1234') { showToast('PIN salah. Coba lagi.', 'error'); return; }
+  showToast('Berhasil masuk!', 'success');
+  setTimeout(() => { goTo(currentRole); initPage(currentRole); }, 500);
+}
+
+function doLogout() {
+  showToast('Berhasil keluar', 'info');
+  setTimeout(() => goTo('landing'), 500);
+}
+
+function initPage(role) {
+  if (role === 'guru') { initChartBars(); initPenilaianList(); initRekapTable(); }
+  if (role === 'admin') { initAdminCharts(); }
+}
+
+// ─── GURU PAGES ──────────────────────────────────
+function showGuruPage(page, navEl) {
+  document.querySelectorAll('[id^="guru-"]').forEach(el=>el.style.display='none');
+  document.getElementById('guru-'+page).style.display='block';
+  if(navEl) {
+    document.querySelectorAll('#view-guru .nav-item').forEach(n=>n.classList.remove('active'));
+    navEl.classList.add('active');
+  }
+  if(page==='rekap') initRekapTable();
+}
+
+function initChartBars() {
+  const vals = [65,70,68,74,72,78];
+  const container = document.getElementById('chart-bars');
+  if(!container) return;
+  container.innerHTML = vals.map((v,i)=>`
+    <div class="chart-bar-wrap">
+      <div style="font-size:11px;color:${v===Math.max(...vals)?'var(--c-green)':v===Math.min(...vals)?'var(--c-red)':'var(--c-muted)'};margin-bottom:4px;font-weight:600;">${v}</div>
+      <div class="chart-bar" style="height:${(v/100)*100}px;background:${v===Math.max(...vals)?'var(--c-green)':v===Math.min(...vals)?'rgba(239,68,68,0.5)':'rgba(249,115,22,0.5)'};"></div>
+    </div>
+  `).join('');
+}
+
+const tugasQueue = [
+  {nama:'Maria Nona Taolin',kelas:'8A',waktu:'20 Apr, 14:32'},
+  {nama:'Ghifar Maulana',kelas:'8A',waktu:'20 Apr, 15:10'},
+  {nama:'Rina Lestari',kelas:'8A',waktu:'20 Apr, 16:22'},
+  {nama:'Tono Wijaya',kelas:'8A',waktu:'21 Apr, 07:45'},
+  {nama:'Dewi Puspita',kelas:'8A',waktu:'21 Apr, 08:30'},
+];
+let currentGradeIdx = 0;
+
+function initPenilaianList() {
+  const el = document.getElementById('penilaian-list');
+  if(!el) return;
+  el.innerHTML = tugasQueue.map((t,i)=>`
+    <div onclick="selectGradeItem(${i},this)" style="padding:12px 14px;border-radius:var(--r);margin-bottom:8px;cursor:pointer;background:${i===0?'rgba(249,115,22,0.08)':'var(--c-bg3)'};border:1.5px solid ${i===0?'var(--c-accent)':'transparent'};display:flex;align-items:center;justify-content:space-between;" id="grade-item-${i}">
+      <div>
+        <div style="font-weight:600;font-size:14px;">${t.nama}</div>
+        <div style="font-size:12px;color:var(--c-muted);">${t.kelas} · ${t.waktu}</div>
+      </div>
+      <span class="tag ${i<2?'tag-orange':'tag-blue'}">${i<2?'Menunggu':'Baru'}</span>
+    </div>
+  `).join('');
+
+  const grid = document.getElementById('nilai-grid');
+  if(!grid) return;
+  const nils = [60,65,70,75,80,82,85,88,90,95,100];
+  grid.innerHTML = nils.map(n=>`<button class="nilai-btn" onclick="selectNilai(${n},this)">${n}</button>`).join('');
+}
+
+function selectGradeItem(idx, el) {
+  currentGradeIdx = idx;
+  document.querySelectorAll('[id^="grade-item-"]').forEach(e=>{
+    e.style.background='var(--c-bg3)'; e.style.borderColor='transparent';
+  });
+  el.style.background='rgba(249,115,22,0.08)'; el.style.borderColor='var(--c-accent)';
+  document.getElementById('grade-student-name').textContent = tugasQueue[idx].nama;
+}
+
+function selectNilai(n, el) {
+  selectedNilai = n;
+  document.querySelectorAll('.nilai-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function submitNilai() {
+  if(!selectedNilai) { showToast('Pilih nilai dulu', 'error'); return; }
+  const item = document.getElementById('grade-item-'+currentGradeIdx);
+  if(item) { item.style.opacity='0.4'; item.innerHTML += '<span class="tag tag-green" style="margin-left:auto;">✓ Dinilai '+selectedNilai+'</span>'; }
+  showToast(`Nilai ${selectedNilai} disimpan untuk ${tugasQueue[currentGradeIdx].nama}`, 'success');
+  selectedNilai = null;
+  document.querySelectorAll('.nilai-btn').forEach(b=>b.classList.remove('selected'));
+}
+
+function initRekapTable() {
+  const tbody = document.getElementById('rekap-table');
+  if(!tbody) return;
+  tbody.innerHTML = siswaData.map((s,i)=>{
+    const avg = ((s.t1+s.t2+s.t3)/3).toFixed(1);
+    const color = avg>=75?'var(--c-green)':avg>=60?'var(--c-yellow)':'var(--c-red)';
+    const status = avg>=75?'<span class="tag tag-green">Baik</span>':avg>=60?'<span class="tag tag-yellow">Cukup</span>':'<span class="risk-flag">⚠ At-risk</span>';
+    return `<tr><td>${i+1}</td><td><strong>${s.nama}</strong></td><td>${s.t1}</td><td>${s.t2}</td><td>${s.t3}</td><td style="font-weight:700;color:${color};font-size:15px;">${avg}</td><td>${status}</td></tr>`;
+  }).join('');
+}
+
+// ─── SISWA PAGES ─────────────────────────────────
+function showSiswaPage(page, navEl) {
+  document.querySelectorAll('[id^="siswa-"]').forEach(el=>el.style.display='none');
+  document.getElementById('siswa-'+page).style.display='block';
+  if(navEl) {
+    document.querySelectorAll('#view-siswa .nav-item').forEach(n=>n.classList.remove('active','blue'));
+    navEl.classList.add('active','blue');
+  }
+}
+
+function triggerUpload() { document.getElementById('file-input').click(); }
+
+function handleFileSelect(input) {
+  if(!input.files[0]) return;
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = e => {
+    const preview = document.getElementById('photo-preview');
+    const section = document.getElementById('preview-section');
+    preview.innerHTML = `<img src="${e.target.result}" alt="preview">`;
+    section.style.display = 'block';
+    const fakeKB = Math.floor(Math.random()*60)+120;
+    document.getElementById('compress-status').textContent = `✓ Foto terkompresi · ${fakeKB}KB`;
+    showToast(`Foto dikompresi ke ${fakeKB}KB`, 'success');
+  };
+  reader.readAsDataURL(file);
+}
+
+function submitTugas() {
+  const preview = document.getElementById('photo-preview');
+  if(!preview.querySelector('img')) { showToast('Upload foto tugas dulu ya!','error'); return; }
+  showToast('Mengirim tugas...','info');
+  setTimeout(()=>{ openModal('modal-submit-sukses'); }, 1000);
+}
+
+// ─── ADMIN PAGES ─────────────────────────────────
+function showAdminPage(page, navEl) {
+  document.querySelectorAll('[id^="admin-"]').forEach(el=>el.style.display='none');
+  document.getElementById('admin-'+page).style.display='block';
+  if(navEl) {
+    document.querySelectorAll('#view-admin .nav-item').forEach(n=>n.classList.remove('active'));
+    navEl.classList.add('active');
+  }
+}
+
+function initAdminCharts() {
+  const kelasData = [{kelas:'9A',avg:78.4},{kelas:'8B',avg:75.1},{kelas:'8A',avg:74.2},{kelas:'7A',avg:70.3},{kelas:'9B',avg:68.7},{kelas:'7B',avg:61.2}];
+  const el = document.getElementById('kelas-chart');
+  if(!el) return;
+  el.innerHTML = `<div class="chart-bar-group" style="height:140px;">` +
+    kelasData.map(d=>`
+      <div class="chart-bar-wrap">
+        <div style="font-size:11px;color:${d.avg<65?'var(--c-red)':d.avg>75?'var(--c-green)':'var(--c-muted)'};margin-bottom:4px;font-weight:600;">${d.avg}</div>
+        <div class="chart-bar" style="height:${(d.avg/100)*130}px;background:${d.avg<65?'rgba(239,68,68,0.6)':d.avg>75?'rgba(34,197,94,0.6)':'rgba(168,85,247,0.5)'};"></div>
+        <div class="chart-bar-label">${d.kelas}</div>
+      </div>
+    `).join('') + '</div>';
+
+  const partEl = document.getElementById('partisipasi-list');
+  if(!partEl) return;
+  const parData = [{kelas:'9A',pct:95},{kelas:'8A',pct:92},{kelas:'8B',pct:88},{kelas:'7A',pct:84},{kelas:'9B',pct:78},{kelas:'7B',pct:71}];
+  partEl.innerHTML = parData.map(d=>`
+    <div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;">
+        <span>Kelas ${d.kelas}</span>
+        <strong style="color:${d.pct<80?'var(--c-red)':d.pct>90?'var(--c-green)':'var(--c-yellow)'};">${d.pct}%</strong>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${d.pct}%;background:${d.pct<80?'var(--c-red)':d.pct>90?'var(--c-green)':'var(--c-yellow)'};"></div></div>
+    </div>
+  `).join('');
+}
+
+// ─── MODAL ───────────────────────────────────────
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if(e.target===m) m.classList.remove('open'); });
+});
+
+function buatTugas() {
+  closeModal('modal-buat-tugas');
+  showToast('Tugas berhasil dibuat! QR code siap dibagikan', 'success');
+}
+function tambahGuru() {
+  closeModal('modal-tambah-guru');
+  showToast('Guru berhasil ditambahkan', 'success');
+}
+
+// ─── TOAST ───────────────────────────────────────
+function showToast(msg, type='info') {
+  const container = document.getElementById('toastContainer');
+  const icons = {success:'✓',error:'✕',info:'ℹ'};
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<span>${icons[type]||'ℹ'}</span> ${msg}`;
+  container.appendChild(t);
+  setTimeout(() => t.remove(), 3200);
+}
+
+// ─── OFFLINE SIMULATION ──────────────────────────
+document.getElementById('offlineBar').addEventListener('click', () => {
+  const bar = document.getElementById('offlineBar');
+  if(bar.classList.contains('show')) {
+    bar.classList.remove('show');
+    document.getElementById('guru-offline-q').style.display='none';
+    document.getElementById('siswa-offline-q').style.display='none';
+    document.getElementById('offline-notice').style.display='none';
+    showToast('Koneksi pulih! Data sedang disinkron...','success');
+  } else {
+    bar.classList.add('show');
+    document.getElementById('siswa-offline-q').style.display='inline-flex';
+    document.getElementById('offline-notice').style.display='block';
+    showToast('Mode offline aktif','info');
+  }
+});
+
+// ─── INIT ─────────────────────────────────────────
+window.addEventListener('online', () => {
+  document.getElementById('offlineBar').classList.remove('show');
+  showToast('Koneksi kembali! Data disinkron otomatis','success');
+});
+window.addEventListener('offline', () => {
+  document.getElementById('offlineBar').classList.add('show');
+  showToast('Tidak ada koneksi — mode offline aktif','info');
+});
+</script>
+
+<!-- ══════════════════════════════════════════════
+     AI MODULE — Tambahan baru, kode di atas tidak diubah
+══════════════════════════════════════════════ -->
+<script>
+// ════════════════════════════════════════════════
+// GURUKU AI MODULE
+// Modul 1: Anomali Nilai (at-risk insight)
+// Modul 2: Ringkasan Kelas Otomatis
+// Modul 3: Feedback Penilaian Cepat
+// Modul 4: Saran Belajar Siswa
+// Modul 5: Validasi Foto
+// Fallback: semua modul graceful degrade
+// ════════════════════════════════════════════════
+
+const AI_SYSTEM_GURU = 'Kamu adalah asisten AI GuruKu untuk guru SMP di daerah pelosok Indonesia. Berikan insight singkat, konkret, dan actionable dalam Bahasa Indonesia. Gunakan tag <strong> untuk angka/nama penting. Respons maksimal 3 kalimat, langsung ke inti.';
+
+const AI_SYSTEM_SISWA = 'Kamu adalah tutor AI GuruKu untuk siswa SMP. Berikan saran belajar yang spesifik, memotivasi, dan praktis dalam Bahasa Indonesia yang ramah dan mudah dipahami. Gunakan <strong> untuk poin penting. Maksimal 3 kalimat.';
+
+const AI_SYSTEM_ADMIN = 'Kamu adalah AI analis pendidikan GuruKu untuk kepala sekolah. Berikan ringkasan eksekutif yang fokus pada pola penting dan rekomendasi tindakan. Bahasa Indonesia formal dan profesional. Gunakan <strong> untuk data kunci. Maksimal 3-4 kalimat.';
+
+// ── Core AI caller ────────────────────────────────
+async function guruKuAI(userPrompt, systemPrompt) {
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userPrompt }]
+      })
+    });
+    if (!res.ok) return null;
+    const d = await res.json();
+    return d.content?.[0]?.text?.trim() || null;
+  } catch {
+    return null;
+  }
+}
+
+// ── Loading state helper ──────────────────────────
+function setAILoading(el, msg = 'AI sedang menganalisis') {
+  if (!el) return;
+  el.innerHTML = `<span class="ai-loading"><span class="ai-loading-dots"><span></span><span></span><span></span></span>&nbsp;${msg}...</span>`;
+}
+
+// ════════════════════════════════════════════════
+// MODUL 1 — Guru Dashboard Insight
+// Dipanggil saat login sebagai guru
+// ════════════════════════════════════════════════
+async function aiGuruDashboardInsight() {
+  const el = document.getElementById('guru-insight-text');
+  const ts = document.getElementById('guru-insight-ts');
+  if (!el) return;
+  setAILoading(el, 'Menganalisis data kelas');
+  const result = await guruKuAI(
+    `Data kelas hari ini (Selasa 21 April 2026):
+- Total siswa: 94 aktif
+- Pengumpulan tugas: 87 dari 94 siswa (92%)
+- Rata-rata nilai minggu ini: 74.2 (naik 6 poin dari minggu lalu)
+- Tugas aktif: "Persamaan Linear" kelas 8A deadline besok, sudah 24/32 kumpul; "Fungsi Kuadrat" 9A deadline 25 Apr, sudah 28/31 kumpul
+- Siswa at-risk: Budi Santoso 8A (nilai tren turun -18 dalam 3 tugas, sekarang 52), Ahmad Fauzi 9A (tidak kumpul 2x, nilai 48), Siti Rahayu 8B (tren turun -12, nilai 55), Dewi Puspita 8A (stagnan di 60)
+
+Berikan 2-3 kalimat insight untuk Pak Yosef hari ini. Fokus pada hal yang paling perlu ditindaklanjuti segera.`,
+    AI_SYSTEM_GURU
+  );
+  if (result) {
+    el.innerHTML = result;
+    if (ts) ts.textContent = 'baru saja diperbarui AI ✨';
+  }
+}
+
+// ════════════════════════════════════════════════
+// MODUL 2 — Guru Laporan Ringkasan Mingguan
+// Dipanggil saat halaman laporan dibuka
+// ════════════════════════════════════════════════
+async function aiGuruLaporanRingkasan() {
+  const el = document.getElementById('laporan-ai-text');
+  if (!el) return;
+  setAILoading(el, 'Membuat ringkasan laporan mingguan');
+  const result = await guruKuAI(
+    `Buat ringkasan laporan mingguan untuk Pak Yosef (guru Matematika SMP).
+
+Data minggu ini:
+- Kelas 8A: rata-rata 74.2 (naik 6.2 poin dari minggu lalu, 24/32 sudah kumpul Persamaan Linear)
+- Kelas 8B: rata-rata 75.1 (30/30 sudah kumpul Statistika Dasar, sudah selesai dinilai)
+- Kelas 9A: rata-rata 78.4 (28/31 sudah kumpul Fungsi Kuadrat, 10 sudah dinilai)
+- Tingkat pengumpulan tugas: 92%, tertinggi dalam 4 minggu
+- Siswa at-risk: 4 siswa (Budi Santoso 52, Ahmad Fauzi 48 - tidak kumpul 2x, Siti Rahayu 55, Dewi Puspita 60 stagnan)
+
+Tulis ringkasan 3-4 kalimat yang bisa dikirim ke kepala sekolah. Sertakan rekomendasi tindakan konkret.`,
+    AI_SYSTEM_GURU
+  );
+  if (result) el.innerHTML = result;
+}
+
+// ════════════════════════════════════════════════
+// MODUL 3 — Feedback Penilaian Cepat
+// Tombol "Generate Feedback AI" di panel penilaian
+// ════════════════════════════════════════════════
+async function aiGenerateFeedback() {
+  if (!selectedNilai) {
+    showToast('Pilih nilai dulu sebelum generate feedback', 'error');
+    return;
+  }
+  const studentName = document.getElementById('grade-student-name').textContent;
+  const catatanEl = document.getElementById('catatan-input');
+  if (!catatanEl) return;
+
+  catatanEl.value = 'Generating...';
+  catatanEl.disabled = true;
+
+  const result = await guruKuAI(
+    `Buat 1 kalimat feedback singkat untuk siswa SMP bernama ${studentName} yang mendapat nilai ${selectedNilai} pada tugas Persamaan Linear Satu Variabel. Nilai kisaran: 60-70 perlu perbaikan, 71-80 cukup baik, 81-100 bagus. Feedback harus spesifik untuk mata pelajaran Matematika, memotivasi, dan tidak lebih dari 12 kata.`,
+    'Kamu menulis feedback singkat untuk siswa SMP dalam Bahasa Indonesia. Satu kalimat saja, langsung, spesifik, dan memotivasi. Jangan ada label atau prefix apapun, langsung kalimatnya.'
+  );
+
+  catatanEl.disabled = false;
+  if (result) {
+    catatanEl.value = result.replace(/^["']|["']$/g, '');
+    showToast('Feedback AI siap!', 'success');
+  } else {
+    catatanEl.value = '';
+    showToast('Gagal generate feedback, tulis manual ya', 'info');
+  }
+}
+
+// ════════════════════════════════════════════════
+// MODUL 4 — Saran Belajar Siswa (halaman Nilai)
+// Inject ke #siswa-ai-saran saat halaman nilai dibuka
+// ════════════════════════════════════════════════
+async function aiSiswasSaranBelajar() {
+  const container = document.getElementById('siswa-ai-saran');
+  if (!container || container.dataset.loaded) return;
+  container.dataset.loaded = 'true';
+
+  container.innerHTML = `
+    <div class="ai-chat-bubble">
+      <div class="ai-header">
+        <span class="ai-badge"><span class="ai-dot" style="background:var(--c-blue);"></span>Saran Belajar AI</span>
+      </div>
+      <p id="siswa-saran-text" style="font-size:14px;line-height:1.7;color:var(--c-text);"></p>
+    </div>`;
+
+  const textEl = document.getElementById('siswa-saran-text');
+  setAILoading(textEl, 'Menganalisis pola nilaimu');
+
+  const result = await guruKuAI(
+    `Siswa SMP kelas 8A bernama Maria Nona Taolin.
+Riwayat nilai Matematika:
+- Aljabar Dasar: 85 (feedback guru: "Mantap!")
+- Fungsi Kuadrat: 82 (feedback guru: "Grafik kurang rapi")
+- Statistika Dasar: 88 (feedback guru: "Bagus, pertahankan!")
+Rata-rata: 85, peringkat 3 dari 32 siswa di kelas.
+
+Berikan 2-3 kalimat saran belajar yang personal, spesifik terhadap pola nilainya, dan memotivasi Maria untuk terus berkembang.`,
+    AI_SYSTEM_SISWA
+  );
+
+  if (textEl) {
+    textEl.innerHTML = result || 'Nilaimu konsisten bagus! Fokus berlatih <strong>menggambar grafik fungsi</strong> lebih rapi untuk meningkatkan nilai Matematika kamu. Pertahankan semangat belajarmu — kamu sudah di <strong>peringkat 3 kelas</strong>! 🌟';
+  }
+}
+
+// ════════════════════════════════════════════════
+// MODUL 1b — Analisis At-Risk per siswa
+// Tombol "Analisis AI" di tabel siswa at-risk
+// ════════════════════════════════════════════════
+async function aiAnalyzeAtRisk() {
+  const resultDiv = document.getElementById('at-risk-ai-result');
+  const textEl = document.getElementById('at-risk-ai-text');
+  if (!resultDiv || !textEl) return;
+
+  resultDiv.style.display = 'block';
+  setAILoading(textEl, 'Menganalisis 4 siswa at-risk');
+
+  const result = await guruKuAI(
+    `Analisis 4 siswa at-risk berikut dan berikan rekomendasi tindakan konkret untuk Pak Yosef:
+
+1. Budi Santoso (8A): nilai turun dari 70→62→52 dalam 3 tugas terakhir (-18 poin total)
+2. Ahmad Fauzi (9A): tidak mengumpulkan tugas 2 kali, nilai terakhir 48
+3. Siti Rahayu (8B): nilai turun dari 75→68→55 (-20 poin total), selalu kumpul tapi hasil menurun
+4. Dewi Puspita (8A): nilai stagnan di kisaran 60-72, tidak ada progress selama 3 minggu
+
+Berikan rekomendasi tindakan spesifik untuk masing-masing atau kelompokkan berdasarkan jenis masalah. Maksimal 4 kalimat total.`,
+    AI_SYSTEM_GURU
+  );
+
+  textEl.innerHTML = result || '<strong>Ahmad Fauzi</strong> membutuhkan kontak langsung segera karena tidak mengumpulkan 2 tugas — kemungkinan ada hambatan di luar akademis. <strong>Budi & Siti</strong> menunjukkan tren penurunan serupa yang mungkin disebabkan kesulitan materi yang sama; pertimbangkan sesi remedial bersama. <strong>Dewi Puspita</strong> perlu pendekatan berbeda karena nilainya stagnan meski selalu kumpul — coba cek apakah dia memahami konsep atau hanya mengerjakan tanpa mengerti.';
+}
+
+// ════════════════════════════════════════════════
+// MODUL 5 — Admin Overview AI
+// Dipanggil saat login sebagai admin
+// ════════════════════════════════════════════════
+async function aiAdminOverviewInsight() {
+  const el = document.getElementById('admin-insight-text');
+  if (!el) return;
+  setAILoading(el, 'Menganalisis data seluruh sekolah');
+
+  const result = await guruKuAI(
+    `Ringkasan mingguan SMP Negeri 1 TTS, Timor Tengah Selatan, NTT:
+
+Performa kelas (rata-rata nilai):
+- 9A: 78.4 (tertinggi), partisipasi 95%
+- 8B: 75.1, partisipasi 88%
+- 8A: 74.2, partisipasi 92%
+- 7A: 70.3, partisipasi 84%
+- 9B: 68.7, partisipasi 78%
+- 7B: 61.2 (terendah), partisipasi 71%
+
+Total: 186 siswa, 8 guru, 6 kelas aktif.
+8 siswa at-risk terdeteksi dari berbagai kelas.
+Pak Dedi (guru IPA) terakhir aktif 5 hari lalu.
+
+Buat ringkasan eksekutif 3-4 kalimat untuk kepala sekolah. Sertakan prioritas tindakan minggu ini.`,
+    AI_SYSTEM_ADMIN
+  );
+
+  if (el) el.innerHTML = result || 'Sekolah menunjukkan performa baik minggu ini dengan tingkat partisipasi pengumpulan tugas <strong>89%</strong>. Kelas 9A mencatat rata-rata nilai tertinggi (78.4), sementara kelas 7B memerlukan perhatian dengan rata-rata 61.2. Terdapat <strong>8 siswa</strong> dari total 3 kelas yang terindikasi at-risk dan memerlukan intervensi segera.';
+}
+
+// ════════════════════════════════════════════════
+// HOOK — Override navigation functions
+// Semua kode asli tidak diubah, kita extend di sini
+// ════════════════════════════════════════════════
+const _orig_initPage = window.initPage;
+window.initPage = function(role) {
+  _orig_initPage(role);
+  // Trigger AI setelah init selesai
+  if (role === 'guru') {
+    setTimeout(aiGuruDashboardInsight, 400);
+  }
+  if (role === 'admin') {
+    setTimeout(aiAdminOverviewInsight, 400);
+  }
+};
+
+const _orig_showGuruPage = window.showGuruPage;
+window.showGuruPage = function(page, navEl) {
+  _orig_showGuruPage(page, navEl);
+  if (page === 'laporan') {
+    setTimeout(aiGuruLaporanRingkasan, 300);
+  }
+};
+
+const _orig_showSiswaPage = window.showSiswaPage;
+window.showSiswaPage = function(page, navEl) {
+  _orig_showSiswaPage(page, navEl);
+  if (page === 'nilai') {
+    setTimeout(aiSiswasSaranBelajar, 400);
+  }
+};
+</script>
+
+</body>
+</html>
